@@ -22,11 +22,11 @@ class PemungutanSuaraProvider extends GetConnect {
     }
   }
 
-  Future<Response> updatePoin(id, totalpoin) async {
+  Future<Response> updatePilihanPemilih(id, pilih) async {
     try {
-      final url = Controllers.url + 'poin/' + id.toString();
+      final url = Controllers.url + 'pemilih/' + id.toString();
       Map<String, String> mRequest = {
-        "totalpoin": totalpoin.toString(),
+        "pilih": pilih.toString(),
       };
       final response = put(
         url,
@@ -35,8 +35,6 @@ class PemungutanSuaraProvider extends GetConnect {
           "Accept": "application/json",
         },
       );
-      print(url);
-      print(mRequest);
 
       return response;
     } catch (e) {
@@ -63,22 +61,6 @@ class PemungutanSuaraProvider extends GetConnect {
   Future<Response> getDataId(id) async {
     try {
       final url = Controllers.url + 'calonrt/' + id.toString();
-      final response = get(
-        url,
-        headers: {
-          "Accept": "application/json",
-        },
-      );
-
-      return response;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<Response> getPoin() async {
-    try {
-      final url = Controllers.url + 'poin';
       final response = get(
         url,
         headers: {

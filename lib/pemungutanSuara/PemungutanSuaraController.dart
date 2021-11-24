@@ -12,8 +12,6 @@ class PemungutanSuaraController extends GetxController {
 
   var listData = [];
   var isReady = false.obs;
-  var listPoin = [];
-  var totalSuara = 0.obs;
   var totalPoin = 0.obs;
 
   @override
@@ -31,6 +29,7 @@ class PemungutanSuaraController extends GetxController {
               if (response.body != null) {
                 if (response.body['data'] != null) {
                   try {
+                    listData.clear();
                     listData = jsonDecode(jsonEncode(response.body['data']));
                     isReady.value = true;
                     update();
@@ -60,66 +59,28 @@ class PemungutanSuaraController extends GetxController {
     update();
   }
 
-  kirimData(id) {
+  kirimData(idCalonRt) {
     try {
-      // ambil nilai akhir total poin
-      PemungutanSuaraProvider().getPoin().then(
+      // ambil data calon rt, untuk mabil point nya
+      PemungutanSuaraProvider().getDataId(idCalonRt).then(
         (response) {
           if (response != null) {
             if (response.statusCode == 200) {
               if (response.body != null) {
                 if (response.body['data'] != null) {
                   try {
-                    listPoin = jsonDecode(jsonEncode(response.body['data']));
-                    totalSuara.value = int.parse(listPoin[0]['totalpoin']) + 1;
+                    totalPoin.value = int.parse(
+                            jsonDecode(jsonEncode(response.body['data']))[0]
+                                ['poin']) +
+                        1;
+// dapat point sudah di tambah, terus di update
+                    prosesEditCalonRt(
+                        jsonDecode(jsonEncode(response.body['data']))[0]['id']);
 
-// ambil nilai akhir point calon rt
-                    PemungutanSuaraProvider().getDataId(id).then(
-                      (response) {
-                        if (response != null) {
-                          if (response.statusCode == 200) {
-                            if (response.body != null) {
-                              if (response.body['data'] != null) {
-                                try {
-                                  totalPoin.value = int.parse(jsonDecode(
-                                              jsonEncode(
-                                                  response.body['data']))[0]
-                                          ['poin']) +
-                                      1;
-// edit poin calon rt
-                                  prosesEditCalonRt(jsonDecode(
-                                          jsonEncode(response.body['data']))[0]
-                                      ['id']);
+                    // edit total poin
+                    prosesEditPemilih(idCalonRt);
 
-                                  // edit total poin
-                                  prosesEditPoin(listPoin[0]['id']);
-
-                                  successMemilih();
-                                } catch (e) {
-                                  Get.defaultDialog(
-                                      title: 'info',
-                                      middleText: 'error encode');
-                                }
-                              } else {
-                                Get.defaultDialog(
-                                    title: 'info', middleText: 'data null');
-                              }
-                            } else {
-                              Get.defaultDialog(
-                                  title: 'info', middleText: 'body null');
-                            }
-                          } else {
-                            Get.defaultDialog(
-                                title: 'info',
-                                middleText: 'response ' +
-                                    response.statusCode.toString());
-                          }
-                        } else {
-                          Get.defaultDialog(
-                              title: 'info', middleText: 'response null ');
-                        }
-                      },
-                    );
+                    successMemilih();
                   } catch (e) {
                     Get.defaultDialog(
                         title: 'info', middleText: 'error encode');
@@ -162,8 +123,10 @@ class PemungutanSuaraController extends GetxController {
     );
   }
 
-  prosesEditPoin(id) {
-    PemungutanSuaraProvider().updatePoin(id, totalSuara.value).then(
+  prosesEditPemilih(idCalonRt) {
+    PemungutanSuaraProvider()
+        .updatePilihanPemilih(Get.arguments.toString(), idCalonRt.toString())
+        .then(
       (response) {
         if (response != null) {
           if (response.statusCode == 200) {
@@ -214,7 +177,9 @@ class PemungutanSuaraController extends GetxController {
 
   @override
   void onClose() {
-    psw.dispose();
+    if (psw != null) {
+      psw.text = '';
+    }
     super.onClose();
   }
 }

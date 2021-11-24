@@ -1,52 +1,28 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:pemilihanrt/doorprize/doorprizePage.dart';
-import 'package:pemilihanrt/hasilSuara/hasilSuaraShowPasswordPage.dart';
-import 'package:pemilihanrt/home/HomeDataPage.dart';
-import 'package:pemilihanrt/home/homeProvider.dart';
-import 'package:pemilihanrt/pemilih/pemilihPage.dart';
-import 'package:pemilihanrt/pemungutanSuara/PemungutanSuaraShowPasswordPage.dart';
+import 'package:pemilihanrt/doorprize/DoorprizeProvider.dart';
 
-class HomeController extends GetxController {
-  var currentIndex = 0.obs;
+class DoorprizeController extends GetxController {
+  var listData = [];
   var isReady = false.obs;
-  var totalPemilihan = 0.obs;
-  List<Widget> listPage = [];
-
+  var randomNumber = 0.obs;
   @override
   void onInit() {
     getData();
-    currentIndex.value = 0;
     super.onInit();
-  }
-
-  void refreshData() {
-    isReady.value = false;
-    update();
-    return getData();
-  }
-
-  getIndex() {
-    listPage = [
-      HomeDataPage(),
-      HasilSuaraShowPasswordPage(),
-      PemilihPage(),
-      DoorprizePage(),
-      PemungutanSuaraShowPasswordPage(),
-    ];
   }
 
   getData() {
     try {
-      HomeProvider().totalPoint().then(
+      DoorprizeProvider().getData().then(
         (response) {
           if (response != null) {
             if (response.statusCode == 200) {
               if (response.body != null) {
                 if (response.body['data'] != null) {
                   try {
-                    totalPemilihan.value =
-                        int.parse(response.body['data']['totalPemilih']);
+                    listData.clear();
+                    listData = jsonDecode(jsonEncode(response.body['data']));
                     isReady.value = true;
                     update();
                   } catch (e) {

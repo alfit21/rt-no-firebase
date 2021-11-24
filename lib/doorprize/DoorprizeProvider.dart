@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:pemilihanrt/utils.dart';
 
-class HomeProvider extends GetConnect {
-  Future<Response> totalPoint() async {
+class DoorprizeProvider extends GetConnect {
+  Future<Response> getData() async {
     try {
-      final url = Controllers.url + 'calonrt/totalPoint';
+      final url = Controllers.url + 'pemilih/doorprize';
       final response = get(
         url,
         headers: {

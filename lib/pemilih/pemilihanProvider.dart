@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:pemilihanrt/utils.dart';
 
-class HasilSuaraProvider extends GetConnect {
-  Future<Response> totalPoint() async {
+class PemilihProvider extends GetConnect {
+  Future<Response> getData() async {
     try {
-      final url = Controllers.url + 'calonrt/totalPoint';
+      final url = Controllers.url + 'pemilih';
       final response = get(
         url,
         headers: {
@@ -18,9 +18,9 @@ class HasilSuaraProvider extends GetConnect {
     }
   }
 
-  Future<Response> getData() async {
+  Future<Response> addPemilih($nama) async {
     try {
-      final url = Controllers.url + 'calonrt';
+      final url = Controllers.url + 'pemilih/tambah/' + $nama;
       final response = get(
         url,
         headers: {

@@ -38,25 +38,27 @@ class HasilSuaraShowPasswordPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            TextField(
-                              onTap: () {
-                                hasilSuaraC.psw.text = '';
-                              },
-                              controller: hasilSuaraC.psw,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: Colors.white,
-                              ),
-                              obscuringCharacter: '*',
-                              obscureText: true,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                labelText: 'Masukan password...',
-                                labelStyle: TextStyle(
+                            Expanded(
+                              child: TextField(
+                                onTap: () {
+                                  hasilSuaraC.psw.text = '';
+                                },
+                                controller: hasilSuaraC.psw,
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30,
-                                  color: Color(0XFF3E065F),
+                                  color: Colors.white,
+                                ),
+                                obscuringCharacter: '*',
+                                obscureText: true,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: 'Masukan password...',
+                                  labelStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                    color: Color(0XFF3E065F),
+                                  ),
                                 ),
                               ),
                             ),

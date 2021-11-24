@@ -8,8 +8,8 @@ class HasilSuaraController extends GetxController {
   TextEditingController psw = TextEditingController();
 
   var listData = [];
+  var totalPemilihan = 0.obs;
   var isReady = false.obs;
-  var listPoin = [];
 
   @override
   void onInit() {
@@ -19,14 +19,15 @@ class HasilSuaraController extends GetxController {
 
   getData() {
     try {
-      HasilSuaraProvider().getPoin().then(
+      HasilSuaraProvider().totalPoint().then(
         (response) {
           if (response != null) {
             if (response.statusCode == 200) {
               if (response.body != null) {
                 if (response.body['data'] != null) {
                   try {
-                    listPoin = jsonDecode(jsonEncode(response.body['data']));
+                    totalPemilihan.value =
+                        int.parse(response.body['data']['totalPemilih']);
                   } catch (e) {
                     Get.defaultDialog(
                         title: 'info', middleText: 'error encode');
@@ -55,6 +56,7 @@ class HasilSuaraController extends GetxController {
               if (response.body != null) {
                 if (response.body['data'] != null) {
                   try {
+                    listData.clear();
                     listData = jsonDecode(jsonEncode(response.body['data']));
                     isReady.value = true;
                     update();
@@ -86,7 +88,9 @@ class HasilSuaraController extends GetxController {
 
   @override
   void onClose() {
-    psw.dispose();
+    if (psw != null) {
+      psw.text = '';
+    }
     super.onClose();
   }
 }

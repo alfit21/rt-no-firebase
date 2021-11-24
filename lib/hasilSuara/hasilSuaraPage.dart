@@ -46,20 +46,15 @@ class HasilSuaraPage extends StatelessWidget {
                             child: GetBuilder<HasilSuaraController>(
                                 initState: hasilSuaraC.getData(),
                                 builder: (controller) {
-                                  if (controller.listPoin.length == 0) {
-                                    return Container();
-                                  } else {
-                                    return Text(
-                                      'Total suara ' +
-                                          controller.listPoin[0]['totalpoin']
-                                              .toString(),
-                                      style: GoogleFonts.josefinSans(
-                                          textStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 25,
-                                              color: Colors.white)),
-                                    );
-                                  }
+                                  return Text(
+                                    'Total suara ' +
+                                        controller.totalPemilihan.toString(),
+                                    style: GoogleFonts.josefinSans(
+                                        textStyle: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25,
+                                            color: Colors.white)),
+                                  );
                                 }),
                           ),
                           Container(

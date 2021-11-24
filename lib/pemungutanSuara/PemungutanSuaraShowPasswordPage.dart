@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pemilihanrt/home/homePage.dart';
 import 'package:pemilihanrt/pemungutanSuara/PemungutanSuaraController.dart';
-import 'package:pemilihanrt/pemungutanSuara/PemungutanSuaraPage.dart';
+import 'package:pemilihanrt/pilihPemilih/pilihPemilihPage.dart';
 
 class PemungutanSuaraShowPasswordPage extends StatelessWidget {
   final c =
@@ -52,26 +52,28 @@ class PemungutanSuaraShowPasswordPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      TextField(
-                        onTap: () {
-                          pemungutanSuaraC.psw.text = '';
-                        },
-                        controller: pemungutanSuaraC.psw,
-                        autofocus: true,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                          color: Colors.white,
-                        ),
-                        obscuringCharacter: '*',
-                        obscureText: true,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Masukan password...',
-                          labelStyle: TextStyle(
+                      Expanded(
+                        child: TextField(
+                          onTap: () {
+                            pemungutanSuaraC.psw.text = '';
+                          },
+                          controller: pemungutanSuaraC.psw,
+                          autofocus: true,
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
-                            color: Color(0XFF3E065F),
+                            color: Colors.white,
+                          ),
+                          obscuringCharacter: '*',
+                          obscureText: true,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Masukan password...',
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Color(0XFF3E065F),
+                            ),
                           ),
                         ),
                       ),
@@ -80,7 +82,7 @@ class PemungutanSuaraShowPasswordPage extends StatelessWidget {
                             if (pemungutanSuaraC.psw.text == '068') {
                               Get.focusScope.unfocus();
                               pemungutanSuaraC.psw.text = '';
-                              Get.to(() => PemungutanSuaraPage());
+                              Get.to(() => PilihPemilihPage());
                             } else if (pemungutanSuaraC.psw.text == '111') {
                               Get.focusScope.unfocus();
                               pemungutanSuaraC.psw.text = '';
